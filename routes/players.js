@@ -21,6 +21,7 @@ router.get('/:name', function(req, res, next) {
     'accept-encoding': 'gzip, deflate'})
     .send("ignorethis=8205&usernamelist="+name+"&basePasswordString=77564898")
     .end(function (response) {
+        console.log(response);
         var resString = response.body
         var params = resString.split("&")
         var uglyPlayer = {};

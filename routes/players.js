@@ -4,24 +4,31 @@ var request = require("request");
 var unirest = require("unirest");
 
 /* GET users listing. */
-router.get('/', function(req, res, next) {
+router.post('/', function(req, res, next) {
+    console.log(req.headers)
 
     
   res.send('players resource');
 });
 
 router.get('/:name', function(req, res, next) {
+    // console.log(req.headers)
     var name = req.params.name
-
-    unirest.post('http://www.multiplayer.gg/physics/scripts/verifyxp.php')
-    .headers({'cache-control': 'no-cache',
+    // var url = 'http://localhost:3000/players';
+    var url = 'http://www.multiplayer.gg/physics/scripts/verifyxp.php';
+    unirest.post(url)
+    .headers({
+        'host': 'multiplayer.gg',
+        'cache-control': 'no-cache',
     'accept': '*/*',
     'content-type': 'application/x-www-form-urlencoded',
     'accept-language': 'en-US,en;q=0.9,pt-BR;q=0.8,pt;q=0.7',
     'accept-encoding': 'gzip, deflate'})
     .send("ignorethis=8205&usernamelist="+name+"&basePasswordString=77564898")
     .end(function (response) {
-        console.log(response);
+        console.log(response.headers);
+        console.log(response.body);
+        console.log(response.req);
         var resString = response.body
         var params = resString.split("&")
         var uglyPlayer = {};
@@ -52,7 +59,6 @@ router.get('/:name', function(req, res, next) {
             percent: percent,
             wins: wins
         };
-      console.log(response.body);
       res.send(player);
     });
   });

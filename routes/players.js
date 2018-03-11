@@ -18,7 +18,6 @@ router.get('/:name', function(req, res, next) {
     var url = 'http://www.multiplayer.gg/physics/scripts/verifyxp.php';
     unirest.post(url)
     .headers({
-        'host': 'multiplayer.gg',
         'cache-control': 'no-cache',
     'accept': '*/*',
     'content-type': 'application/x-www-form-urlencoded',
